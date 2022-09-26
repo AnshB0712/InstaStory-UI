@@ -68,7 +68,7 @@ export const Story = ({
   <Indicator 
   key={i}
   className={currentSlideIndex === i && inViewImageLoaded ?'active':''}
-  completed={currentSlideIndex > i && inViewImageLoaded}
+  completed={currentSlideIndex > i}
   /> 
   )})}
   </Indicators>

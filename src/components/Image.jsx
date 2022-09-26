@@ -1,4 +1,5 @@
 import { useState,useEffect,useRef} from 'react'
+import styled,{keyframes} from 'styled-components'
 
 const options = {
   root: null,
@@ -39,15 +40,45 @@ export const Image = ({
   onLoad = {() => setInViewImageLoaded(true)}
   />
 
-  <p 
-  style={{
-  color:'#fff',
-  display: inViewImageLoaded ? 'none':'block'
-  }}>
-  Loading...
-  </p>
+  <ImageLoader 
+  inViewImageLoaded
+  ={inViewImageLoaded}
+  />
   
   </figure>
   )
   
 }
+
+const ImageFigure = styled.figure`
+     position: relative;
+`
+
+const spin = keyframes`
+  from{
+  transform: 
+  translate(-50%,-50%) rotate(0deg);
+  }
+  to{
+  transform: 
+  translate(-50%,-50%) rotate(360deg);
+  }
+`
+
+const ImageLoader = styled.div`
+     display: ${({inViewImageLoaded}) => inViewImageLoaded ? 'none':'block'};
+      
+     height: 35px;
+     width: 35px;
+     
+     position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%,-50%);
+     
+     border: 2px solid transparent;
+     border-top: 2px solid #fff;
+     border-radius: 50%;
+     
+     animation: ${spin} .5s linear infinite;
+`
