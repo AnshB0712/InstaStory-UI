@@ -1,10 +1,18 @@
 import { useState, useEffect } from 'react';
 import {X,ChevronRight,ChevronLeft} from 'react-bootstrap-icons'
 import styled,{keyframes} from 'styled-components'
+import { Image } from './Image'
 
-export const Story = ({data,goToPrevStory,goToNextStory,handleCloseClick}) => {
+export const Story = ({
+  data,
+  goToPrevStory,
+  goToNextStory,
+  handleCloseClick
+}) => {
   
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  
+  const [inViewImageLoaded,setInViewImageLoaded] = useState(false)
   
   const currentSlide = data.slides[currentSlideIndex];
   const slideCount = data.slides.length;
@@ -31,15 +39,25 @@ export const Story = ({data,goToPrevStory,goToNextStory,handleCloseClick}) => {
 }
 
   useEffect(() => {
+    
+  if(!inViewImageLoaded) return
+    
   let interval;
 
 	interval = setInterval(() => {
 	 handleNextClick()
   },data.timer)
 
-	return () => clearInterval(interval)
-	
-  }, [handleNextClick,data.slides.length,data.timer]);
+	return () => {
+	  clearInterval(interval)
+	  setInViewImageLoaded(false)
+	}
+  }, [
+    handleNextClick,
+    data.slides.length,
+    currentSlide.image,
+    inViewImageLoaded
+  ]);
 
   return(
   <StoryWrapper>
@@ -49,8 +67,8 @@ export const Story = ({data,goToPrevStory,goToNextStory,handleCloseClick}) => {
   return (
   <Indicator 
   key={i}
-  className={currentSlideIndex === i?'active':''}
-  completed={currentSlideIndex > i}
+  className={currentSlideIndex === i && inViewImageLoaded ?'active':''}
+  completed={currentSlideIndex > i && inViewImageLoaded}
   /> 
   )})}
   </Indicators>
@@ -67,7 +85,12 @@ export const Story = ({data,goToPrevStory,goToNextStory,handleCloseClick}) => {
 	 style={{marginLeft:'auto'}}/>
 	</UserInfoTab>
   
-  <img src={currentSlide.image}/>
+
+   <Image 
+   setInViewImageLoaded={setInViewImageLoaded}
+   inViewImageLoaded={inViewImageLoaded}
+   src={currentSlide.image}
+  />
   
   <ButtonContainer>
   
