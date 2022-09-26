@@ -1,12 +1,11 @@
 import styled from 'styled-components'
-import HeroImg from '../data/hero/hero.jpg'
 import {BlockQuotes} from './BlockQuotes'
 
 
 export const HeroSection = () => {
   return(
   <Wrapper>
-  <img src={HeroImg} alt="Red Tour"/>
+  <img src="/hero/hero.jpg" alt="Red Tour"/>
   
   <GridView>
   <BlockQuotes 
