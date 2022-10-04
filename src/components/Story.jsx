@@ -115,7 +115,7 @@ export const Story = ({
 
 
 const StoryWrapper = styled.div`
-     max-width: 1400px;
+     max-width: 1700px;
      width: 100%;
      
      background: #000;
